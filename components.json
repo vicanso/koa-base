@@ -1,0 +1,19 @@
+{
+  "index": {
+    "css": [
+      "/component/normalize.css",
+      "/css/home.css"
+    ],
+    "js": [
+      "/component/debug.js",
+      "/component/angular.js",
+      "/component/angular-local-storage.js",
+      "/service/utils.js",
+      "/service/http_log.js",
+      "/service/debug.js",
+      "/js/global.js",
+      "/js/home.js"
+    ],
+    "modifiedAt": "2015-03-24 18:27:05"
+  }
+}
