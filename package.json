@@ -30,6 +30,7 @@
     "koa-views": "^3.0.0",
     "lodash": "^3.3.1",
     "moment": "^2.9.0",
+    "node-uuid": "^1.4.3",
     "require-tree": "^1.0.1"
   },
   "devDependencies": {
