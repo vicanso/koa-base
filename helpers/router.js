@@ -26,11 +26,14 @@ function getTemplateRender(template){
       noCache = true;
     }
     state.TEMPLATE = template;
+    var start = Date.now();
     yield this.render(template, state, noCache);
     this.body = appendJsAndCss(this.body, importer);
     if(config.env === 'development'){
       logComponents(template, importer);
     }
+    // render模板的时间
+    this._renderTimeConsuming = Date.now() - start;
   };
 }
 

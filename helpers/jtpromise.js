@@ -7,7 +7,6 @@ exports.wrap = wrap;
 function wrap(){
   var args = _.toArray(arguments);
   var fn = args.shift();
-  var context = fn.context;
   return new Promise(function(resolve, reject){
     var cbf = function(err, data){
       if(err){
@@ -21,6 +20,6 @@ function wrap(){
       }
     };
     args.push(cbf);
-    fn.apply(context, args);
+    fn.apply(null, args);
   });
 }

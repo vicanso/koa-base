@@ -80,9 +80,11 @@ function *parseStylus(file){
     return;
   }
   var data = yield jtpromise.wrap(fs.readFile, file, 'utf8');
-  var render = stylus(data).set('filename', file).use(nib());
-  render.render.context = render;
-  var css = yield jtpromise.wrap(render.render);
+
+  function render(cbf){
+    stylus(data).set('filename', file).use(nib()).render(cbf);
+  }
+  var css = yield jtpromise.wrap(render);
 
   return css;
 }

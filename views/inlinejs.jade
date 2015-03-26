@@ -1,11 +1,12 @@
 script.
   (function(global){
     global.CONFIG = {
-      debug : #{DEBUG || 0},
+      debug : #{DEBUG || false},
       env : '#{ENV}',
       pattern : '#{PATTERN || ""}',
       staticUrlPrefix : '#{STATIC_URL_PREFIX}',
-      template : '#{TEMPLATE}'
+      template : '#{TEMPLATE}',
+      createdAt : '#{moment().format()}'
     };
     global.TIMING = {
       logs : {},

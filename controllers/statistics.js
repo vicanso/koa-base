@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function *(){
   var data = this.request.body;;
-  console.log(JSON.stringify(data));
+  console.info(JSON.stringify(data));
   var timing = data.timing;
   if(timing){
     var result = {

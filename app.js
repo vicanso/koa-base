@@ -58,13 +58,8 @@ function initServer(port){
   }));
 
 
-  // 添加全局配置信息
-  app.use(function *(next){
-    var state = this.state;
-    state.STATIC_URL_PREFIX = config.staticUrlPrefix;
-    state.ENV = config.env;
-    yield* next;
-  });
+  // 添加常量或者一些工具方法到state中
+  app.use(middlewares.state());
 
 
   // bodyparser的处理

@@ -1,7 +1,9 @@
 'use strict';
 var os = require('os');
 var util = require('util');
-
+var _ = require('lodash');
+var config = require('../config');
+var debug = require('debug')('jt.koa');
 /**
  * [exports 添加信息到response header]
  * @param  {[type]} processName [description]
@@ -12,6 +14,7 @@ module.exports = function(processName){
   var handlingReqTotal = 0;
   var hostname = os.hostname();
   var pid = process.pid;
+  debug('processName:%s, hostname:%s, pid:%s', processName, hostname, pid);
   return function *(next){
     var start = Date.now();
     handlingReqTotal++;
@@ -34,13 +37,22 @@ module.exports = function(processName){
       var url = ctx.request.url;
       var httpVersion = ctx.req.httpVersion;
       var headers = ctx.request.headers;
-      var str = util.format('%s "%s %s HTTP/%s" %d %d %dms "%s" "%s" %d-%d', ip, method, url, httpVersion, ctx.status, ctx.length, use, headers.referer || '', headers['user-agent'], handlingReqTotal, requestTotal);
-      console.info(str);
+      var length = -1;
+      if(!_.isUndefined(ctx.length)){
+        length = ctx.length;
+      }else{
+        length = ctx.body && ctx.body.length;
+      }
+      var str = util.format('%s "%s %s HTTP/%s" %d %d %d-%dms "%s" "%s" %d-%d', ip, method, url, httpVersion, ctx.status, length, renderTimeConsuming, use, headers.referer || '', headers['user-agent'], handlingReqTotal, requestTotal);
+      handlingReqTotal--;
+      if(config.env !== 'development'){
+        console.info(str);
+      }
     }
     yield* next;
     var use = Date.now() - start;
-    var jtInfo = util.format('%s,%s,%d,%d,%d,%d', hostname, processName, pid, handlingReqTotal, requestTotal, use);
-    handlingReqTotal--;
-    this.set('JT-Info', jtInfo);
+    var renderTimeConsuming = ctx._renderTimeConsuming || 0;
+    var jtInfo = util.format('%s,%s,%d,%d,%d,%d,%d', hostname, processName, pid, handlingReqTotal, requestTotal, renderTimeConsuming, use);
+    ctx.set('JT-Info', jtInfo);
   };
 };
