@@ -1,0 +1,1 @@
+!function(){"use strict";var t=angular.module("jt.service.utils",[]);t.factory("utils",function(){return utils={now:Date.now||function(){return(new Date).getTime()}},utils})}(this);

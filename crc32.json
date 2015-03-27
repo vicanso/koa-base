@@ -1,0 +1,16 @@
+{
+  "/component/angular-local-storage.js": 2564784117,
+  "/component/angular.js": 3663378867,
+  "/component/debug.js": 3151338360,
+  "/js/global.js": 3035915476,
+  "/js/home.js": 3393104143,
+  "/merge/angular-local-storage,utils,http_log,debug.js": 2952271839,
+  "/merge/global,home.js": 4025218510,
+  "/service/debug.js": 1030773828,
+  "/service/http_log.js": 3542804524,
+  "/service/utils.js": 317650908,
+  "/component/normalize.css": 3489224492,
+  "/css/home.css": 3662602835,
+  "/merge/normalize,home.css": 1016015038,
+  "/img/raise.png": 3916843176
+}

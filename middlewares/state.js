@@ -2,8 +2,10 @@
 var _ = require('lodash');
 var moment = require('moment');
 var path = require('path');
+var fs = require('fs');
 var config = require('../config');
-var fileTag = require('../helpers/util').fileTag;
+var crc32Infos = require('../crc32');
+var defaultVersion = fs.readFileSync(path.join(__dirname, '../version'), 'utf8');
 /**
  * [exports 添加常量或者一些工具方法到state中]
  * @return {[type]} [description]
@@ -18,13 +20,7 @@ module.exports = function(){
     //用于对图片文件生成版本号
     state.TAG = function(file){
       var url = path.join(config.staticUrlPrefix, file);
-      file = path.join(config.staticPath, file);
-      var tag;
-      if(config.env === 'development'){
-        tag = Date.now();
-      }else{
-        tag = fileTag(file);
-      }
+      var tag = crc32Infos[file] || defaultVersion;
       return url + '?v=' + tag;
     };
     yield* next;
