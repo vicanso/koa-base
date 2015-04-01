@@ -3,7 +3,11 @@ var requireTree = require('require-tree');
 var controllers = requireTree('./controllers');
 var router = require('./helpers/router');
 var config = require('./config');
+var _ = require('lodash');
 var addImporter = getImporterMiddleware();
+
+var redisOptions = getRedisOptions();
+var session = require('./middlewares/session')(redisOptions);
 
 var routeInfos = [
   {
@@ -24,6 +28,7 @@ var routeInfos = [
   },
   {
     method : ['get', 'post'],
+    middleware : [session],
     route : '/user',
     handler : controllers.user
   }
@@ -57,4 +62,13 @@ function getImporterMiddleware(){
     importerOptions.merge = staticMerge;
   }
   return importer(importerOptions);
+}
+
+
+function getRedisOptions(){
+  var options = _.extend({}, config.servers.redis, config.redisOptions);
+  if(process.env.REDIS_PWD){
+    options.pass = process.env.REDIS_PWD;
+  }
+  return options;
 }

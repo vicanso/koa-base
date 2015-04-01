@@ -25,9 +25,11 @@ function getUserSession(ctx){
     // TODO 记录UV
     console.info('uv++');
   }
-  ctx.body = {
+  var data = {
     name : 'vicanso',
     now : Date.now(),
     code : uuid.v4()
   };
+  ctx.session.name = 'test';
+  ctx.body = data;
 }

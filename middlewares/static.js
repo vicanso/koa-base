@@ -23,16 +23,6 @@ module.exports = function(staticPath, options){
   
   var notFoundMaxAge = 600;
   return function *(next){
-    if(mount){
-      var url = this.request.url;
-      if(url.substring(0, length) === mount){
-        this.request.url = url.substring(length);
-      }else{
-        yield* next;
-        return;
-      }
-    }
-
     yield handler.call(this, next);
     // 开发环境下，请求到stylus等文件的处理
     if(config.env === 'development' && !this.body){

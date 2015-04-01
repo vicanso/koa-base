@@ -9,9 +9,9 @@ var appVersion = 'no version';
 var jtpromise = require('../helpers/jtpromise');
 
 
-module.exports = function(adminPath){
+module.exports = function(){
 
-  router.get('/jt/version', validate, versionHandler);
+  router.get('/version', validate, versionHandler);
   return router.routes();;
 };
 
