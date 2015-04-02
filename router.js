@@ -8,6 +8,7 @@ var addImporter = getImporterMiddleware();
 
 var redisOptions = getRedisOptions();
 var session = require('./middlewares/session')(redisOptions);
+var nocache = require('./middlewares/query-checker')('cache=false')
 
 var routeInfos = [
   {
@@ -28,7 +29,7 @@ var routeInfos = [
   },
   {
     method : ['get', 'post'],
-    middleware : [session],
+    middleware : [nocache, session],
     route : '/user',
     handler : controllers.user
   }

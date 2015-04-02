@@ -18,8 +18,7 @@ module.exports = function(processName){
   return function *(next){
     var start = Date.now();
     handlingReqTotal++;
-    requestTotal++;
-
+    var index = ++requestTotal;
     var ctx = this;
     var res = this.res;
     var onfinish = done.bind(null, 'finish');
@@ -43,7 +42,7 @@ module.exports = function(processName){
       }else{
         length = ctx.body && ctx.body.length;
       }
-      var str = util.format('%s "%s %s HTTP/%s" %d %d %d-%dms "%s" "%s" %d-%d', ip, method, url, httpVersion, ctx.status, length, renderTimeConsuming, use, headers.referer || '', headers['user-agent'], handlingReqTotal, requestTotal);
+      var str = util.format('%s "%s %s HTTP/%s" %d %d %d-%dms "%s" "%s" %d-%d-%d', ip, method, url, httpVersion, ctx.status, length, renderTimeConsuming, use, headers.referer || '', headers['user-agent'], handlingReqTotal, index, requestTotal);
       handlingReqTotal--;
       if(config.env !== 'development'){
         console.info(str);

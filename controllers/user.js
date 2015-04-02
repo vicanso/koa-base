@@ -1,6 +1,7 @@
 'use strict';
 var uuid = require('node-uuid');
 var moment = require('moment');
+var _ = require('lodash');
 module.exports = function *(){
   var method = this.method;
 
@@ -25,11 +26,16 @@ function getUserSession(ctx){
     // TODO 记录UV
     console.info('uv++');
   }
-  var data = {
-    name : 'vicanso',
-    now : Date.now(),
-    code : uuid.v4()
-  };
-  ctx.session.name = 'test';
+  var data;
+  if(ctx.session.data){
+    data = _.pick(ctx.session.data, ['account', 'name', 'code', 'lastLoginedAt', 'loginTimes', 'created']);
+  }else{
+    data = {
+      code : uuid.v4(),
+      created : Date.now()
+    }
+    ctx.session.data = _.clone(data);
+  }
+  data.now = Date.now();
   ctx.body = data;
 }
